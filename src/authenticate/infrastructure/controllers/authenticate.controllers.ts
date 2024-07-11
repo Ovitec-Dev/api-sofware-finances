@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 // import { IIncident_report_Service } from '../../models';
 // import { ICase } from '../../models/case.model';
+// import Authentication from './oauth.controllers';
 
-class AdminController {
+class AuthenticationController {
   // constructor(private readonly incident_report_Service:IIncident_report_Service<ICase> ) {
   constructor( ) {
     this.list_case = this.list_case.bind(this);
@@ -19,4 +20,4 @@ class AdminController {
   };
 }
 
-export default AdminController;
+export default AuthenticationController;
