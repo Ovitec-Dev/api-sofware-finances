@@ -5,7 +5,7 @@ import { authentication } from '../controllers';
 const router = Router();
 
 router.get('/auth',  async (_req, res: Response) => {
-  const users = 'Hello , you are into at future'
+  const users = 'Hello you are into at future'
   res.send(users)
 }); 
 
