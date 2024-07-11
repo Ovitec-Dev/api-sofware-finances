@@ -37,6 +37,7 @@ bower_components
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
+src/incident_report
 
 # Dependency directories
 node_modules/
@@ -128,3 +129,21 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+<<<<<<< HEAD
+=======
+# Built Visual Studio Code Extensions
+*.vsix
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+### Personal settings ###
+dist/
+build/
+public/content/images/projects/*
+public/content/attachments/projects/*
+public/tmp/*
+email-templates/*
+.DS_Store
+>>>>>>> dev
