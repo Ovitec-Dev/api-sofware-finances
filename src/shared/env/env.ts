@@ -23,6 +23,7 @@ export default {
     redirect_uris: [process.env.GOOGLE_OAUTH_REDIRECT_URIS],
     URL_OAUTH_ACCOUNTS: 'https://accounts.google.com/o/oauth2/auth',
     URL_Token: 'https://oauth2.googleapis.com/token',
-    URL_SCOPE: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email'
+    URL_SCOPE: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+    URL_USER_INFO: 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token='
   }
 };

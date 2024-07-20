@@ -1,8 +1,9 @@
-// import BusinessError from "@shared/handler/businessError";
-// import { Query } from "../query.model";
+import { GoogleUserProfile } from "../google_types";
 
-export interface IIncident_report_Service<T> {
-//  manager_case ():Promise<string|T>
-  findCase(query: object): Promise<T[] | null> 
-  findOneCase(caseId: string): Promise<T | null>
-  }
+export interface IAuthService<T> {
+  register(TDetails: Partial<T>): Promise<string>;
+  login(email: string, password: string): Promise<string>;
+  saveGoogleUser(TDetails: GoogleUserProfile): Promise<string>;
+  generateToken(T: T): Promise<string>;
+}
+

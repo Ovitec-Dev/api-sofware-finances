@@ -1,9 +1,7 @@
-// import { Query } from '../query.model';
 
-interface IIncident_report_Repository<T> {
-  // queryConstruction(query:Query):Promise<string>
-  find_one_case(caseId: string,dbName: string): Promise< T | null> ;
-  find_case(query:object,dbName: string): Promise< T[] | null> 
+export interface IAuthenticateRepository<T> {
+  create_user(userDetails: Partial<T>): Promise<string>;
+  find_user_by_email(email: string): Promise<T | null>;
+  find_user_by_id(id: number): Promise<T | null>;
+  update_user(id: number, userDetails: Partial<T>): Promise<boolean>;
 }
-
-export { IIncident_report_Repository };

@@ -13,3 +13,5 @@ export const models = [
   Transaction,
   Budget,
 ];
+export { User, Budget, Transaction, Category, SubCategory,};
+

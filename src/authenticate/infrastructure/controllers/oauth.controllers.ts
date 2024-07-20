@@ -1,6 +1,7 @@
 import { Response, Request, NextFunction } from 'express';
 import { config, httpClient } from '@shared/index';
 import logger from '@shared/utils/logger';
+import { authentication_Service } from '@authenticate/services';
 
 class Authentication {
 constructor() {
@@ -41,16 +42,15 @@ constructor() {
                 grant_type: 'authorization_code',
                 redirect_uri: config.Oauth.redirect_uris[0],
             };
-
             const result = await httpClient.post< typeof params, object | any >(urlBase, params);
             if (!result) return next(new Error('oauth_errors.token_retrieval_error'));
 
-            res.cookie('access_token', result.access_token, {
-                maxAge: result.expires_in * 1000,
-                httpOnly: true,
-                secure: true 
-            });
-            res.status(200).json(`Verificado : ${result.access_token}`);
+            const userInfo = await httpClient.get(`${config.Oauth.URL_USER_INFO}${result.access_token}`);
+            if (!userInfo) return next(new Error('oauth_errors.user_info_error'));
+            const token = await authentication_Service.saveGoogleUser(userInfo);
+            res.status(200).json({ Token: token })    
+
+            // res.status(200).json(`Verificado : ${userInfo}`);
         } catch (error){
             next(error);
         }
