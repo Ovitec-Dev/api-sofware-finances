@@ -36,7 +36,7 @@ COPY --chown=node:node --from=builder /build/package.json package.json
 COPY --chown=node:node --from=builder /build/node_modules node_modules
 COPY --chown=node:node --from=builder /build/tsconfig.json tsconfig.json
 # Copiar el archivo YAML necesario
-COPY --chown=node:node --from=builder /build/src/shared/handler/error.yml dist/src/shared/handler/error.yml
+COPY --chown=node:node --from=builder /build/src/shared/handler dist/src/shared/handler
 COPY --chown=node:node --from=builder /build/src/shared/docs dist/src/shared/docs
 
 RUN touch dist/.env
