@@ -2,7 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 import { authentication_Service } from '@authenticate/services';
 
 class AuthController {
+  // constructor(private readonly incident_report_Service:IIncident_report_Service<ICase> ) {
   constructor() {
+
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
     this.forgotPassword = this.forgotPassword.bind(this);
