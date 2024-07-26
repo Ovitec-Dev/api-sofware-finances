@@ -1,5 +1,5 @@
-name: Backend - Incident Report API
-run-name: '[incident-report-api]${{ github.actor }} has made changes on branch ${{ github.ref_name }}'
+name: Backend - Software Finances API
+run-name: '[software-finances-api]${{ github.actor }} has made changes on branch ${{ github.ref_name }}'
 on:
   push:
     branches:
