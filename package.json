@@ -1,7 +1,7 @@
 {
-  "name": "wai-incident-report-api-develop",
+  "name": "ovitec-software-finance-api-develop",
   "version": "1.0.0",
-  "description": "administrative neighborhood incidents api",
+  "description": "api for better management of software finance projects",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
