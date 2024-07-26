@@ -3,6 +3,7 @@ FROM node:lts-alpine AS builder
 
 # Checking version node
 RUN node --version
+
 # Select workdir
 WORKDIR /build
 
@@ -12,6 +13,8 @@ COPY . /build
 # Build application 
 RUN npm install
 RUN npm run build
+# Copiar archivos estáticos después de la build
+RUN cp -r src/shared/handler dist/src/shared/handler && cp -r src/shared/docs dist/src/shared/docs
 
 # LAUNCHER SERVER STAGE
 FROM node:lts-alpine
@@ -35,9 +38,6 @@ COPY --chown=node:node --from=builder /build/dist dist
 COPY --chown=node:node --from=builder /build/package.json package.json
 COPY --chown=node:node --from=builder /build/node_modules node_modules
 COPY --chown=node:node --from=builder /build/tsconfig.json tsconfig.json
-# Copiar el archivo YAML necesario
-COPY --chown=node:node --from=builder /build/src/shared/handler dist/src/shared/handler
-COPY --chown=node:node --from=builder /build/src/shared/docs dist/src/shared/docs
 
 RUN touch dist/.env
 
