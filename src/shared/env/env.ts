@@ -15,7 +15,8 @@ export default {
   JWT_SECRET: process.env.JWT_SECRET,
   PREFIX_URL: process.env.PREFIX_URL || '/api',
   MQ_SERVER_URL: process.env.MQ_SERVER_URL,
-  DIR_ERRORS: process.env.DIR_ERRORS || './src/shared/handler/error.yml',
+  // DIR_ERRORS: process.env.DIR_ERRORS || './src/shared/handler/error.yml',
+  DIR_ERRORS: process.env.DIR_ERRORS || './dist/src/shared/handler/error.yml',
   Oauth: {
     project_id: "login-finances",
     client_id: process.env.GOOGLE_OAUTH_CLIENT_ID,
