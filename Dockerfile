@@ -13,8 +13,9 @@ COPY . /build
 # Build application 
 RUN npm install
 RUN npm run build
+
 # Copiar archivos estáticos después de la build
-RUN cp -r src/shared/handler dist/src/shared/handler && cp -r src/shared/docs dist/src/shared/docs
+RUN cp -r src/shared/handler/error.yml dist/src/shared/handler/error.yml && cp -r src/shared/docs dist/src/shared/docs
 
 # LAUNCHER SERVER STAGE
 FROM node:lts-alpine
