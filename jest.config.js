@@ -10,6 +10,7 @@ module.exports = {
     '^@server(.*)$': '<rootDir>/src/server/$1',
     '^@shared(.*)$': '<rootDir>/src/shared/$1',
     '^@authenticate(.*)$': '<rootDir>/src/authenticate/$1',
+    '^@finance(.*)$': '<rootDir>/src/finance/$1',
   },
   coveragePathIgnorePatterns: ['/node_modules/', '/config/', '.*/index.ts$', '.*/app.ts$', '/models/', '/routes/'],
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],

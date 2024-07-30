@@ -34,7 +34,7 @@
     "paths": {
       "@server/*": ["src/server/*"],
       "@shared/*": ["src/shared/*"],
-      // "@incident_report/*": ["src/incident_report/*"]
+      "@finance/*": ["src/finance/*"],
       "@authenticate/*": ["src/authenticate/*"]
     },
     "experimentalDecorators": true, // Habilita decoradores
