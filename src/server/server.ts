@@ -65,6 +65,9 @@ export default class Server {
       })
     );
 
+    // // Middleware de manejo de errores
+    // this.app.use(errorHandler);
+    
     // Serve Swagger UI when not in production
     const prefix = config.PREFIX_URL;
     const swaggerDocument = YAML.load(config.DIR_SWAGGER || '');

@@ -21,6 +21,13 @@ general:
         es: 'La cuenta de usuario proporcionada está inactiva.'
         en: 'The given user account is inactive.'
       status: 401
+    not_found_user:
+      key: 'general.UNAUTHORIZED.not_found_user'
+      code: 'UNAUTHORIZED'
+      message:
+        es: 'La cuenta de usuario proporcionada no existe.'
+        en: 'The given user account does not exist.'
+      status: 401
   FORBIDDEN:
     https_access_restricted:
       key: 'general.FORBIDDEN.https_access_restricted'

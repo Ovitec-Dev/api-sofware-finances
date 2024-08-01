@@ -17,7 +17,7 @@ export class AuthenticateRepository implements IAuthenticateRepository<User> {
         return `${user.id}` ; 
       } catch (error) {
         logger.error('Error creating user:', error);
-        throw new Error('Database error');
+        throw error
       }
   }
 
@@ -32,7 +32,7 @@ export class AuthenticateRepository implements IAuthenticateRepository<User> {
       return user;
     } catch (error) {
       logger.error('Error finding user by email:', error);
-      throw new Error('Database error');
+      throw error
     }
   }
 
@@ -48,8 +48,8 @@ export class AuthenticateRepository implements IAuthenticateRepository<User> {
       return rto;
     } catch (error) {
         logger.error('Error finding user by id:', error);
-        throw new Error('Database error');
-    }
+        throw error
+      }
   }
 
   async update_user(id: number, changes: Partial<User>): Promise<boolean> {
@@ -62,7 +62,7 @@ export class AuthenticateRepository implements IAuthenticateRepository<User> {
       return true;
   } catch (error) {
       logger.error('Error updating user:', error);
-      throw new Error('Database error');
+      throw error
   }
   }
 }

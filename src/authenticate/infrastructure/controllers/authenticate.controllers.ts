@@ -24,11 +24,8 @@ class AuthController {
     try {
       const {email, password} = req.body;
       const token = await authentication_Service.login(email, password);
-      if (token) {
-        res.status(200).json({ token });
-      } else {
-        res.status(401).json({ message: 'Invalid credentials' });
-      }
+      if (!token) throw new Error('general.UNAUTHORIZED.not_found_user');
+      res.status(200).json({ accessToken: token });
     } catch (error) {
       next(error);
     }
@@ -42,7 +39,6 @@ class AuthController {
     } catch (error) {
       next(error);
     }
-    // Implementa la lógica para el olvido de la contraseña aquí
   }
 }
 

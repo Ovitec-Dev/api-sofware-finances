@@ -23,7 +23,7 @@ export class AuthService implements IAuthService<User> {
       return user;
     } catch (error) {
       logger.error('Error registering user:', error);
-      throw new Error('Database error');
+      throw error
     }
   }
 
@@ -31,16 +31,16 @@ export class AuthService implements IAuthService<User> {
     try {
       let token:string = '' 
       const user = await this.UserRepository.find_user_by_email(email);
-      if(!user) throw new Error('User not found');
+      if(!user) throw new Error('general.UNAUTHORIZED.not_found');
       if (user) {
         const isValidPassword = await Auth.comparePassword(password, user.password)
-        if (!isValidPassword) throw new Error('Invalid password');
+        if (!isValidPassword) throw new Error('general.UNAUTHORIZED.invalid_access_key');
         token = await this.generateToken(user);
       }
       return token;
     } catch (error) {
       logger.error('Error logging in user:', error);
-      throw new Error('Database error');
+      throw error
     }
   }
 
@@ -73,14 +73,14 @@ export class AuthService implements IAuthService<User> {
   
       // Buscar el usuario por su ID
       const user = await this.UserRepository.find_user_by_id(parseInt(userId, 10));
-      if (!user) throw new Error('User not found');
+      if(!user) throw new Error('general.UNAUTHORIZED.not_found');
   
       // Generar y devolver el token para el usuario
       return await this.generateToken(user);
     } catch (error) {
       // Manejo de errores
       logger.error('Error saving Google user:', error);
-      throw new Error('Database error');
+      throw error
     }
   }
   

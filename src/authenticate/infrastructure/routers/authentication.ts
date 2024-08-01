@@ -1,12 +1,7 @@
-import { Router,Response, } from 'express';
+import { Router} from 'express';
 import { authentication,adminController } from '../controllers';
 
 const router = Router();
-
-router.get('/auth',  async (_req, res: Response) => {
-  const users = 'Hello you are into at future'
-  res.send(users)
-}); 
 
 router.post('/register', adminController.register);
 
