@@ -2,7 +2,8 @@
 // import { config, httpClient, User } from '@shared/index';
 // import logger from '@shared/utils/logger';
 // import { ErrorHTTP } from '@shared/interface/httpClient.interface';
-
+import jwt from 'jsonwebtoken';
+import { config } from '@shared/index';
 // async function authMiddleware(req: Request, res: Response, next: NextFunction) {
 //   try {
 //     const token = req.cookies.access_token;
@@ -22,7 +23,21 @@
 //     next(error);
 //   }
 // }
-
+export async function verify_token(token: string): Promise<any> {
+    try {
+      if (!config.JWT_SECRET)  throw new Error('JWT_SECRET is not defined');
+      const decoded: any = jwt.verify(token, config.JWT_SECRET);
+      if (!decoded) throw new Error('Failed to decode token');
+      const user = { 
+        id: decoded.id, 
+        email: decoded.email 
+    };
+      return user;
+    } catch (error) {
+      console.error('Error in verify_token:', error);
+      throw new Error('general.UNAUTHORIZED.invalid_access_key');
+    }
+  }
 // async function refreshTokenAndProceed(req: Request, res: Response, next: NextFunction) {
 //   try {
 //     let refreshToken = req.cookies.refresh_token;

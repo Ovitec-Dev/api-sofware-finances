@@ -211,24 +211,6 @@ components:
           type: string
           example: abcdef123456
 
-    
-    # RegisterRequest:
-    #   type: object
-    #   required:
-    #     - email
-    #     - password
-    #     - user_name
-    #   properties:
-    #     email:
-    #       type: string
-    #       format: email
-    #       example: user@example.com
-    #     password:
-    #       type: string
-    #       format: password
-    #     user_name:
-    #       type: string
-    #       example: John Doe
     RegisterResponse:
       type: object
       properties:
