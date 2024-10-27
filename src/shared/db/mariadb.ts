@@ -11,7 +11,7 @@ class Database {
 
   async initialize(url: string) {
     this.sequelize = new Sequelize(url, {
-      dialect: 'mysql',
+      dialect: 'mariadb',
       logging: false,
       dialectOptions: {
         connectTimeout: 5000,

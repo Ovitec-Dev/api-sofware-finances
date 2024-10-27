@@ -1,7 +1,8 @@
 /* eslint-disable import/no-cycle */
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany, CreatedAt, UpdatedAt, DeletedAt } from 'sequelize-typescript';
 import { Transaction } from './transactions.models';
 import { Budget } from './budgets.models';
+import { Category } from './categories.models';
 
 @Table({
   tableName: 'users',
@@ -96,10 +97,33 @@ export class User extends Model<User> {
   })
   email_verification_token?: string;
 
+  @CreatedAt
+  @Column({
+    type: DataType.DATE,
+    field: 'created_at',
+  })
+  created_at!: Date;
+
+  @UpdatedAt
+  @Column({
+    type: DataType.DATE,
+    field: 'updated_at',
+  })
+  updated_at!: Date;
+
+  @DeletedAt
+  @Column({
+    type: DataType.DATE,
+    field: 'deleted_at', 
+  })
+  deleted_at!: Date;
+
   @HasMany(() => Transaction)
   transactions!: Transaction[];
 
   @HasMany(() => Budget)
   budgets!: Budget[];
-}
 
+  @HasMany(() => Category)
+  categories!: Category[];
+}

@@ -15,6 +15,16 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
+      user_id: {
+        type: Sequelize.BIGINT.UNSIGNED,
+        allowNull: true,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

@@ -1,10 +1,23 @@
 import { NextFunction, Request, Response } from 'express';
+import fs from 'fs';
 import YAML from 'yamljs';
 import { config } from '@shared/index';
 import { ErrorDetail } from '@shared/interface/haddler';
 import logger from '@shared/utils/logger';
+import path from 'path';
 
-const errors = YAML.load(config.DIR_ERRORS);
+const errorFilePath = config.DIR_ERRORS ?? path.join(__dirname, 'error.yml');
+let errors: any = {};
+
+if (fs.existsSync(errorFilePath)) {
+   errors = YAML.load(errorFilePath);
+} else {
+  console.error(`Error file not found at path: ${errorFilePath}`);
+  console.log('__dirname:', __dirname);
+  console.log('config.DIR_ERRORS:', config.DIR_ERRORS);
+  console.log(`Attempting to read error file from: ${errorFilePath}`);  
+  process.exit(1);
+}
 
 // export class AppError extends Error {
 //   status: number;
@@ -31,7 +44,7 @@ export async function createError(errorKey: string, lang: 'en' | 'es' = 'en'): P
       key: 'internal_error',
       code: 'INTERNAL_SERVER_ERROR',
       message: lang === 'es' ? 'Ocurrió un error interno.' : 'An internal error occurred.',
-      status: 500,
+      status: 400,
     };
   }
 

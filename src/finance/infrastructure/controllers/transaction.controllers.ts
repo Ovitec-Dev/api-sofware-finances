@@ -30,14 +30,15 @@ class TransactionController {
 
   async get_transaction_by_id(req: Request, res: Response, next: NextFunction) {
     try {
-        const { trasaction_id } = req.params ;
+        const trasaction = req.params as unknown as any;
+        console.log('trasaction_id', trasaction.id);
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith('Bearer '))throw new Error('general.UNAUTHORIZED.missing_access_key');
         const token = authHeader.split(' ')[1];
         if (!token) throw new Error('general.UNAUTHORIZED.missing_access_key');
         const user = await verify_token(token);
-        if(!trasaction_id) throw new Error('trasaction_id is required');
-        const rto = await this.transaction_Service.get_transaction_by_id(parseInt(trasaction_id, 10),parseInt(user.id, 10));
+        if(!trasaction.id) throw new Error('trasaction_id is required');
+        const rto = await this.transaction_Service.get_transaction_by_id(parseInt(trasaction.id, 10),parseInt(user.id, 10));
       res.status(200).json( rto );
     } catch (error) {
       next(error);

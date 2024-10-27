@@ -6,17 +6,16 @@ dotenv.config();
 
 export default {
   NODE_ENV: process.env.NODE_ENV,
-  PORT: Number(process.env.PORT || 8080),
+  PORT: Number(process.env.PORT) || 3000,
   DOCS_ENDPOINT: '/docs',
   DIR_SWAGGER: process.env.DIR_SWAGGER,
-  DB_CONNECTION: process.env.DB_CONNECTION,
+  DB_CONNECTION: process.env.DB_CONNECTION || 'mariadb://finances_user_dev:a1B2c3D4e5F6g7H8i9J0kLmnOpQrStUvWxYz@db_dev:3306/finances_dev',
   DB_CONNECTION_MONGO: process.env.DB_CONNECTION_MONGO,
   SECURITY_API_URL: process.env.SECURITY_API_URL,
   JWT_SECRET: process.env.JWT_SECRET,
   PREFIX_URL: process.env.PREFIX_URL || '/api',
   MQ_SERVER_URL: process.env.MQ_SERVER_URL,
-  DIR_ERRORS: process.env.DIR_ERRORS || './src/shared/handler/error.yml',
-  // DIR_ERRORS: process.env.DIR_ERRORS || './dist/src/shared/handler/error.yml',
+  DIR_ERRORS: process.env.DIR_ERRORS ,
   Oauth: {
     project_id: "login-finances",
     client_id: process.env.GOOGLE_OAUTH_CLIENT_ID,

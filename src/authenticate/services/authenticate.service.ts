@@ -37,6 +37,8 @@ export class AuthService implements IAuthService<User> {
         if (!isValidPassword) throw new Error('general.UNAUTHORIZED.invalid_access_key');
         token = await this.generateToken(user);
       }
+      await this.UserRepository.update_user(user.id,{ reset_token: token });
+      
       return token;
     } catch (error) {
       logger.error('Error logging in user:', error);
@@ -53,12 +55,12 @@ export class AuthService implements IAuthService<User> {
       // Buscar el usuario por su email
       const existingUser = await this.UserRepository.find_user_by_email(userDetails.email!);
       let userId: string;
-  
-      if (!existingUser) {
+      if (!existingUser || Object.keys(existingUser).length === 0) {
         // Crear un nuevo usuario si no existe
+        const { id, ...userDetailsWithoutId } = userDetails; 
         const newUserGoogle: CreateUser = {
-          ...userDetails,
-          password: '', // No se establece contraseña para usuarios de Google
+          ...userDetailsWithoutId,
+          password: '',
           user_name: userDetails.name,
           google_id: userDetails.id,
           profile_picture: userDetails.picture,
@@ -68,7 +70,8 @@ export class AuthService implements IAuthService<User> {
         userId = await this.UserRepository.create_user(newUserGoogle);
       } else {
         // Si el usuario ya existe, usar su ID
-        userId = existingUser.id.toString();
+        console.log('Ya existe el usuario', existingUser.id);
+        userId = `${existingUser.id}`;
       }
   
       // Buscar el usuario por su ID

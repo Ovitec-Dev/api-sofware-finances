@@ -85,7 +85,8 @@ export class TransactionRepository implements ITransactionRepository<Transaction
   }
 
   async update_transaction(id: number, transactionDetails: Partial<Transaction>): Promise<boolean> {
-    await Transaction.update(transactionDetails, { where: { id } });
+    const rto =await Transaction.update(transactionDetails, { where: { id } });
+    if(!rto || rto === null ) return false;
     return true;
   }
 

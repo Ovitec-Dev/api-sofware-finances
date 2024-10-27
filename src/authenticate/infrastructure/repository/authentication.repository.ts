@@ -25,7 +25,6 @@ export class AuthenticateRepository implements IAuthenticateRepository<User> {
     try {
       const user = await User.findOne({ 
         where: { email },
-        attributes:[],
         raw: true
       });
       if (!user) return {} as User;
@@ -41,7 +40,6 @@ export class AuthenticateRepository implements IAuthenticateRepository<User> {
       const rto = await User.findByPk( 
         id, 
       {
-        attributes:[], 
         raw: true
       });
       if (!rto)  return {} as User;
