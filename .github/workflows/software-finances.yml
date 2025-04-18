@@ -1,15 +1,16 @@
 name: Backend - Software Finances API
 run-name: '[software-finances-api]${{ github.actor }} has made changes on branch ${{ github.ref_name }}'
+env:
+  IMAGE_URL: ghcr.io/Ovitec-Dev/api-sofware-finances/${{ github.ref_name }}/finances_apis:latest
 on:
   push:
     branches:
+      - dev
+      - test
       - main
-    paths:
-      - 'src/**'
-      - '.github/workflows/**'
-  pull_request:
 
 jobs:
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -35,6 +36,120 @@ jobs:
         working-directory: .
       - run: npm run test
         working-directory: .
+
+  release-image:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
+
+      - name: Build Docker image
+        run: docker build -t ${{ env.IMAGE_URL }} .
+
+      - name: Publish Docker image
+        run: docker push ${{ env.IMAGE_URL }}
+
+  deploy-dev:
+    if: ${{ github.ref_name  == 'dev' }}
+    needs: ["release-image"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: print out example job
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.DW_SSH_IP_VM }}
+          username: ${{ secrets.DW_SSH_USER }}
+          key: ${{ secrets.DW_SSH_PRIV_KEY}}
+          port: ${{ secrets.DW_SSH_PORT }}
+          command_timeout: 30m
+          script: |
+            cd Ovitec-DevOps/Infrastructura && \
+            docker compose -f docker-compose.develop.yml pull finance_api_dev && \
+            scripts/start-dev.sh && \
+            docker image prune -af
+  # deploy-test:
+  #   if: ${{ github.ref_name  == 'test' }}
+  #   needs: ["release-image"]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: print out example job
+  #       uses: appleboy/ssh-action@v0.1.10
+  #       with:
+  #         host: ${{ secrets.DW_SSH_IP_VM }}
+  #         username: ${{ secrets.DW_SSH_USER }}
+  #         key: ${{ secrets.DW_SSH_PRIV_KEY}}
+  #         port: ${{ secrets.DW_SSH_PORT }}
+  #         command_timeout: 30m
+  #         script: |
+  #           cd Ovitec-DevOps/Infrastructura && \
+  #           docker compose -f docker-compose.testing.yml pull finance_api_test && \
+  #           scripts/start-test.sh && \
+  #           docker image prune -af
+
+  # deploy-prod:
+  #   if: ${{ github.ref_name  == 'main' }}
+  #   needs: ["release-image"]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: print out example job
+  #       uses: appleboy/ssh-action@v0.1.10
+  #       with:
+  #         host: ${{ secrets.PROD_SSH_IP_VM }}
+  #         username: ${{ secrets.PROD_SSH_USER }}
+  #         port: ${{ secrets.PROD_SSH_PORT }}
+  #         key: ${{ secrets.PROD_SSH_PRIV_KEY }}
+  #         command_timeout: 30m
+  #         script: |
+  #           sudo -u tecnored /bin/bash -c '
+  #           cd TecnoRed-DevOps/Infrastructura  && \
+  #           docker image prune -af && \
+  #           docker compose -f docker-compose.production.yml pull verifeye_api'
+# name: Backend - Software Finances API
+# run-name: '[software-finances-api]${{ github.actor }} has made changes on branch ${{ github.ref_name }}'
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - 'src/**'
+#       - '.github/workflows/**'
+#   pull_request:
+
+# jobs:
+#   lint:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Use Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: lts/*
+#       - run: npm ci
+#         working-directory: .
+#       - run: npm run lint
+#         working-directory: .
+
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Use Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: lts/*
+#       - run: npm ci
+#         working-directory: .
+#       - run: npm run test
+#         working-directory: .
 
   # release-image:
   #   if: ${{ github.ref_name }} == 'main' && ${{ github.event_name }} == 'push'

@@ -49,7 +49,7 @@ constructor() {
             const userInfo = await httpClient.get(`${config.Oauth.URL_USER_INFO}${result.access_token}`);
             if (!userInfo) return next(new Error('oauth_errors.user_info_error'));
             const token = await authentication_Service.saveGoogleUser( userInfo as GoogleUserProfile );
-            // res.status(200).json({ Token: token })    
+            res.status(200).json({ Token: token })    
 
             res.status(200).json(`Verificado : ${userInfo},  Token: ${token} `);
         } catch (error){

@@ -9,7 +9,7 @@ export class TransactionRepository implements ITransactionRepository<Transaction
     this.get_transaction_by_id = this.get_transaction_by_id.bind(this);
     this.get_all_transactions_by_user = this.get_all_transactions_by_user.bind(this);
     this.get_all_transactions = this.get_all_transactions.bind(this);
-    this.update_transaction = this.update_transaction.bind(this);
+    this.update_transaction = this.update_transaction.bind(this); 
   }
 
   async verify_user(user_id: number): Promise<boolean> {
