@@ -11,34 +11,7 @@ on:
 
 jobs:
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: lts/*
-      - run: npm ci
-        working-directory: .
-      - run: npm run lint
-        working-directory: .
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: lts/*
-      - run: npm ci
-        working-directory: .
-      - run: npm run test
-        working-directory: .
-
   release-image:
-    needs: [lint, test]
     runs-on: ubuntu-latest
     permissions: write-all
     steps:

@@ -12,7 +12,7 @@ class Database {
   async initialize(url: string) {
     this.sequelize = new Sequelize(url, {
       dialect: 'mariadb',
-      logging: false,
+      logging: true,
       dialectOptions: {
         connectTimeout: 5000,
       },
@@ -32,10 +32,10 @@ class Database {
       .authenticate()
       .then(() => {
         console.log('DB inicializada y modelos asociados.');
-        // return this.sequelize.sync();
+        return this.sequelize.sync();
       })
       .then(() => {
-        // console.log('DB sincronizada.');
+        console.log('DB sincronizada.');
       })
       .catch((error: unknown) => {
         console.error('Unable to connect to the database:', error);
