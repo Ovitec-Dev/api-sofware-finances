@@ -1,7 +1,7 @@
 name: Backend - Software Finances API
 run-name: '[software-finances-api]${{ github.actor }} has made changes on branch ${{ github.ref_name }}'
 env:
-  IMAGE_URL: ghcr.io/Ovitec-Dev/api-sofware-finances/${{ github.ref_name }}/finances_apis:latest
+  IMAGE_URL: ghcr.io/ovitec-dev/api-sofware-finances/${{ github.ref_name }}/finances_apis:latest
 on:
   push:
     branches:
